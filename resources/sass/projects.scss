@@ -1,0 +1,37 @@
+.project_icons{
+    .icons{
+        list-style: none;
+        display: flex;
+    }
+}
+
+.project_section{
+    padding: 3vw 15vw;
+    // display: flex;
+    // justify-content: space-around;
+    // align-items: center;
+    background-color: $primary;
+    color: white;
+
+    ul.icons{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        li.icon{
+            font-size: 3rem;
+        }
+    }
+    .text{
+        width: 43%;
+    }
+    .project_icons{
+        width: 55%;
+    }
+    #laravel_icon{
+        color: #f13b2f;
+    }
+    #vue_icon{
+        color: #42b883;
+    }
+}

@@ -1,7 +1,7 @@
 <template>
     <div class="login_form_outer">
         <div class="login_form bg-light col-lg-4 col-md-5 col-sm-8">
-            <form class="form" @submit.prevent="login">
+            <form class="form" runat="server" autocomplete="off" @submit.prevent="login">
                 <div class="form-group">
                     <label 
                         class="label" 
@@ -17,6 +17,7 @@
                         @active="labelActive('email')" 
                         @blur="labelInactive('email')" 
                         v-model="formData.email"
+                        autocomplete="off"
                     >
                 </div>
 
@@ -35,6 +36,7 @@
                         @active="labelActive('password')" 
                         @blur="labelInactive('password')"
                         v-model="formData.password"
+                        autocomplete="off"
                     >
                 </div>
 
@@ -46,52 +48,36 @@
     </div>
 </template>
 
-<script setup>
-import { reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-
-    const labelShrink = '10px';
-    const labelUnshrink = '16px';
-    const labelFloatActive = '0px';
-    const labelFloatInactive = '14px';
-
-    const labelActive = key => {
-        labels[key]['fontSize'] = labelShrink;
-        labels[key]['translateY'] = labelFloatActive;
-    }
-
-    const labelInactive = key => {
-        labels[key]['fontSize'] = labelUnshrink;
-        labels[key]['translateY'] = labelFloatInactive;
-    }
+<script>
+    import { reactive, ref } from "vue";
+    import { useRouter } from "vue-router";
+    import themedForm from '../../config/form.js';
     
-    const router = useRouter()
-    let error = ref('');
-    let labels = reactive({
-        email: {
-            fontSize: labelUnshrink,
-            translateY: labelFloatInactive
-        },
-        password: {
-            fontSize: labelUnshrink,
-            translateY: labelFloatInactive
-        }
-    });
+    export default {
+        name: "Login",
+        setup(){
+            const router = useRouter()
+            let error = ref('');
+            let formData = reactive({
+                email: '',
+                password: '',
+            });
 
-    let formData = reactive({
-        email: '',
-        password: '',
-    });
+            console.log(themedForm)
 
-    const login = async() => {
-        await axios.post('/api/login', formData)
-        .then(response => {
-            if(response.status === 200){
-                localStorage.setItem('token', response.data.data.token);
-                router.push('/dashboard');
-            } else {
-                error.value = response.data.message;
+            const login = async() => {
+                await axios.post('/api/login', formData)
+                .then(response => {
+                    if(response.status === 200){
+                        localStorage.setItem('token', response.data.data.token);
+                        router.push('/dashboard');
+                    } else {
+                        error.value = response.data.message;
+                    }
+                })
             }
-        })
+            
+            return { formData, login }
+        }
     }
 </script>
