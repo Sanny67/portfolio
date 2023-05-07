@@ -2,7 +2,7 @@
     <section class="landing_section row">
         <div class="media col-md-6">
             <div class="media_content">
-                <img src="../../../../images/final.png" alt="">
+                <img src="../../../../images/me_orange.png" alt="">
             </div>
         </div>
         <div class="content col-md-6">
@@ -11,6 +11,9 @@
                 <p>Hi! My name is</p>
                 <p><span>Sanny</span></p>
                 <p>Freelance Web Developer from Bangalore, India</p>
+                <br>
+                <button class="btn btn-primary mx-1">Work with me</button>
+                <button class="btn btn-outline-primary mx-1">View Projects</button>
             </div>
         </div>
     </section>

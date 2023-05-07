@@ -8,11 +8,12 @@
     left: 50%;
     padding: 28px 30px;
     transform: translate(-50%, -50%);
+    border: 1px solid $primary;
 
     .form-control, .form-control:focus, .form-control:focus-within, .form-control:focus-visible, .form-control:active, .form-control:focus-visible {
-        background: $secondary !important;
-        outline: 0px solid $secondary;
-        border: 0px solid $secondary;
+        background: $body-bg !important;
+        outline: 0px solid $body-bg;
+        border: 0px solid $body-bg;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
@@ -28,14 +29,14 @@
     }
     .form-group:has(> .form-control){
         border: 1px solid $primary;
-        background-color: $secondary;
+        background-color: $body-bg;
     }
     .form-group label {
         position: absolute;
         top: -20%;
         z-index: 999;
         padding: 0px 4px;
-        background-color: $secondary;
+        background-color: $body-bg;
         transition: 0.2s ease all;
     }
 }

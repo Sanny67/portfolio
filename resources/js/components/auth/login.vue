@@ -1,6 +1,6 @@
 <template>
-    <div class="login_form_outer">
-        <div class="login_form bg-light col-lg-4 col-md-5 col-sm-8">
+    <div class="themed_form_outer">
+        <div class="themed_form bg-light col-lg-4 col-md-5 col-sm-8">
             <form class="form" runat="server" autocomplete="off" @submit.prevent="login">
                 <div class="form-group">
                     <label 
@@ -15,7 +15,7 @@
                         class="form-control" 
                         @focus="labelActive('email')" 
                         @active="labelActive('email')" 
-                        @blur="labelInactive('email')" 
+                        @blur="labelInactive('email', formData.email ? 1 : 0)" 
                         v-model="formData.email"
                         autocomplete="off"
                     >
@@ -34,7 +34,7 @@
                         class="form-control" 
                         @focus="labelActive('password')" 
                         @active="labelActive('password')" 
-                        @blur="labelInactive('password')"
+                        @blur="labelInactive('password', formData.password ? 1 : 0)"
                         v-model="formData.password"
                         autocomplete="off"
                     >
@@ -52,6 +52,7 @@
     import { reactive, ref } from "vue";
     import { useRouter } from "vue-router";
     import themedForm from '../../config/form.js';
+    import axiosCalls from '../../config/axios.js'
     
     export default {
         name: "Login",
@@ -63,12 +64,16 @@
                 password: '',
             });
 
-            console.log(themedForm)
+            let { labels, labelActive, labelInactive } = themedForm()
+            let Axios = axiosCalls()
 
-            const login = async() => {
-                await axios.post('/api/login', formData)
-                .then(response => {
-                    if(response.status === 200){
+            const login = () => {
+                console.log('hit');
+                Axios.post('login', formData)
+                .then((response) => {
+                    console.log(response)
+                    if(response.data.status === 200){
+                        this.setUser(response.data.data.user);
                         localStorage.setItem('token', response.data.data.token);
                         router.push('/dashboard');
                     } else {
@@ -76,8 +81,14 @@
                     }
                 })
             }
+
             
-            return { formData, login }
+            return { formData, login, labels, labelActive, labelInactive }
+        },
+        methods:{
+            setUser: (user) => {
+                this.$store.dispatch('set_user', user);
+            }
         }
     }
 </script>
